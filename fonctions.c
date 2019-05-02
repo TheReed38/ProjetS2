@@ -1,6 +1,6 @@
 #include "structure.h"
 #include <stdio.h>
-
+#include <stdlib.h>
 
 GRAPHE lecture_fichier(char* nom_fichier){
   FILE* f;
@@ -16,7 +16,8 @@ GRAPHE lecture_fichier(char* nom_fichier){
   if (f==NULL) { printf("Impossible d’ouvrir le fichier\n"); exit(EXIT_FAILURE);}
   /* Lecture de la premiere ligne du fichier : nombre de sommet et nombre d’arcs */
   fscanf(f,"%d %d ",&nbsommet,&nbarc);
-  g = calloc(nbsommet, sizeof(temp)); /*Allocation mémoire pour le graphe */
+  g.tab = calloc(nbsommet, sizeof(temp)); /*Allocation mémoire pour le graphe */
+  g.n = nbsommet;
   /* Ligne de texte "Sommets du graphe" qui ne sert a rien */
   fgets(mot,511,f);
   /* lecture d’une ligne de description d’un sommet  */
@@ -36,7 +37,7 @@ GRAPHE lecture_fichier(char* nom_fichier){
     temp.x = lat; /* On remplit les champs du noeud temporaire */
     temp.y = longi;
     temp.voisins = creer_liste();
-    g[i] = temp; /*on ajoute le noeud au graphe*/
+    g.tab[i] = temp; /*on ajoute le noeud au graphe*/
     i++;
   }
 
@@ -46,10 +47,11 @@ GRAPHE lecture_fichier(char* nom_fichier){
     fscanf(f,"%d %d %d", &(numero), &(arrive), &(prix));
     arc.arrivee = arrive;
     arc.cout = prix;
-    g[numero].voisins = ajout_tete(arc, g[numero].voisins);
+    g.tab[numero].voisins = ajout_tete(arc, g.tab[numero].voisins);
     i++;
   }
 
   /* Ne pas oublier de fermer votre ficheir */
   fclose(f);
+  return g;
 }
