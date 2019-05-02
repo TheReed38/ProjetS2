@@ -1,6 +1,7 @@
 #include "structure.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 GRAPHE lecture_fichier(char* nom_fichier){
   FILE* f;
@@ -42,7 +43,7 @@ GRAPHE lecture_fichier(char* nom_fichier){
   }
 
   fgets(mot,511,f); /*ligne de commentaire*/
-  i = 0
+  i = 0;
   while (i<nbarc){ /*on lit les arc */
     fscanf(f,"%d %d %d", &(numero), &(arrive), &(prix));
     arc.arrivee = arrive;
