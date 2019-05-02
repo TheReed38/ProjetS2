@@ -1,0 +1,23 @@
+8 12
+Sommets
+0 0 0 Aaa 0eme arret
+1 1 1 Baa 1er arret
+2 2 2 Caa 2eme arret
+3 3 3 Daa 3eme arret
+4 4 4 Eaa 4eme arret
+5 5 5 Faa 5eme arret
+6 6 6 Gaa 6eme arret
+7 7 7 Haa 7eme arret
+ARc
+0 1 5
+0 2 20
+0 3 40
+1 2 10
+1 4 7
+1 5 20
+2 3 10
+2 5 10
+4 5 10
+4 7 40
+6 5 20
+7 5 10
