@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "stucture.h"
+#include "structure.h"
 
 void affiche_graphe(GRAPHE g) {
   int i;
@@ -27,12 +27,12 @@ void affiche_arc(T_ARC a) {
 
 //Ajoute un arc en tête de liste
 L_ARC ajout_tete(T_ARC t,L_ARC l) {
-    L_ATC p=creer_liste();
+    L_ARC p=creer_liste();
     if (!(liste_vide(p=calloc( 1, sizeof (*p)))))  { p->val=t; p->suiv=l; }
     return p;
 }
 
-L_ARC creer_liste() return NULL;
+L_ARC creer_liste() {return NULL;}
 
 L_ARC supprimer_tete(L_ARC l) {
     if (liste_vide(l)) {
@@ -44,7 +44,7 @@ L_ARC supprimer_tete(L_ARC l) {
     return l;
 }
 
-int liste_vide(L_ARC l) return (l==NULL);
+int liste_vide(L_ARC l) {return (l==NULL);}
 
 //Supprimer le nième élément de la liste (on compte à partir de 0)
 L_ARC supprimen(int n,L_ARC l) {
@@ -59,7 +59,7 @@ L_ARC supprimen(int n,L_ARC l) {
     while ((!liste_vide(k))&&(i<(n-1))) {
       k=k->suiv;
       i+=1;
-    }in_liste
+    }
     if (liste_vide(k)) {
         return l;
     }
@@ -78,10 +78,10 @@ L_ARC liberer_liste(L_ARC l) {
 
 //renvoie 1 si a est dans l, 0 sinon
 int in_liste(T_ARC a,L_ARC l) {
-    if liste_vide(l) {
+    if (liste_vide(l)) {
         return 0;
     }
-    if compare_arc(a,l->val) {
+    if (compare_arc(a,l->val)) {
         return 1;
     }
     return in_liste(a,l->suiv);
@@ -89,10 +89,10 @@ int in_liste(T_ARC a,L_ARC l) {
 
 //renvoie la liste commencant par a si celui-ci est présent, null sinon
 L_ARC recherche_liste(T_ARC a,L_ARC l) {
-    if liste_vide(l) {
+    if (liste_vide(l)) {
         return NULL;
     }
-    if compare_arc(a,l->val) {
+    if (compare_arc(a,l->val)) {
         return l;
     }
     return recherche_liste(a,l->suiv);
