@@ -1,3 +1,6 @@
+#ifndef STRUCT_H
+#define STRUCT_H
+
 typedef struct { int arrivee; double cout; } T_ARC ;
 typedef struct lsucc { T_ARC val; struct lsucc* suiv ; }* L_ARC;
 typedef struct { char* nom; double x,y ; L_ARC voisins;} T_SOMMET ;
@@ -22,3 +25,5 @@ L_ARC recherche_liste(T_ARC a,L_ARC l);
 
 //Fonctions sur les arcs
 int compare_arc(T_ARC a,T_ARC b);
+
+#endif
