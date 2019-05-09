@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 int main(){
-  char nom_fichier[256] = "graphe1.txt";
+  char nom_fichier[256] = "metroetu.txt";
   GRAPHE graphe;
   graphe = lecture_fichier(nom_fichier);
   affiche_graphe(graphe);
