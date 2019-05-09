@@ -8,15 +8,17 @@ GRAPHE lecture_fichier(char* nom_fichier){
   GRAPHE g;
   T_SOMMET temp;
   T_ARC arc;
-  int numero,nbsommet,nbarc,arrive,prix;
-  double lat,longi ;
+  int numero,nbsommet,nbarc,depart,arrive;
+  double lat,longi,prix;
   char line[128] ;
   char mot[512] ;
+  char com[512];
   int i = 0;
   f=fopen(nom_fichier,"r");
   if (f==NULL) { printf("Impossible d’ouvrir le fichier\n"); exit(EXIT_FAILURE);}
   /* Lecture de la premiere ligne du fichier : nombre de sommet et nombre d’arcs */
   fscanf(f,"%d %d ",&nbsommet,&nbarc);
+  printf("Il y a %d sommets et %d arcs"nbsommet,nbarc);
   g.tab = calloc(nbsommet, sizeof(temp)); /*Allocation mémoire pour le graphe */
   g.n = nbsommet;
   /* Ligne de texte "Sommets du graphe" qui ne sert a rien */
@@ -34,7 +36,7 @@ GRAPHE lecture_fichier(char* nom_fichier){
     /* mot contient le nom du sommet. */
     /*Pour sauter les lignes de commentaires, on peut simplement utiliser la fonction fgets sans utiliser
     la chaine de caracteres lue dans le fichier par */
-    temp.nom = mot;
+    temp.nom = strdup(mot);
     temp.x = lat; /* On remplit les champs du noeud temporaire */
     temp.y = longi;
     temp.voisins = creer_liste();
@@ -42,13 +44,13 @@ GRAPHE lecture_fichier(char* nom_fichier){
     i++;
   }
 
-  fgets(mot,511,f); /*ligne de commentaire*/
+  fgets(com,511,f); /*ligne de commentaire*/
   i = 0;
   while (i<nbarc){ /*on lit les arc */
-    fscanf(f,"%d %d %d", &(numero), &(arrive), &(prix));
+    fscanf(f,"%d %d %lf", &(depart), &(arrive), &(prix));
     arc.arrivee = arrive;
     arc.cout = prix;
-    g.tab[numero].voisins = ajout_tete(arc, g.tab[numero].voisins);
+    g.tab[depart].voisins = ajout_tete(arc, g.tab[depart].voisins);
     i++;
   }
 
