@@ -18,7 +18,7 @@ GRAPHE lecture_fichier(char* nom_fichier){
   if (f==NULL) { printf("Impossible d’ouvrir le fichier\n"); exit(EXIT_FAILURE);}
   /* Lecture de la premiere ligne du fichier : nombre de sommet et nombre d’arcs */
   fscanf(f,"%d %d ",&nbsommet,&nbarc);
-  printf("Il y a %d sommets et %d arcs"nbsommet,nbarc);
+  printf("Il y a %d sommets et %d arcs",nbsommet,nbarc);
   g.tab = calloc(nbsommet, sizeof(temp)); /*Allocation mémoire pour le graphe */
   g.n = nbsommet;
   /* Ligne de texte "Sommets du graphe" qui ne sert a rien */
@@ -39,6 +39,7 @@ GRAPHE lecture_fichier(char* nom_fichier){
     temp.nom = strdup(mot);
     temp.x = lat; /* On remplit les champs du noeud temporaire */
     temp.y = longi;
+    temp.num=i;
     temp.voisins = creer_liste();
     g.tab[i] = temp; /*on ajoute le noeud au graphe*/
     i++;
@@ -57,4 +58,77 @@ GRAPHE lecture_fichier(char* nom_fichier){
   /* Ne pas oublier de fermer votre ficheir */
   fclose(f);
   return g;
+}
+
+double astar(GRAPHE g,int dep, int arr,int * listePere) {
+    T_SOMMET best;
+    L_SOMMET temp;
+    L_ARC temp_a;
+    int s;
+    L_SOMMET LF=creer_liste_s();
+    L_SOMMET LO=creer_liste_s();
+    int * lo;
+    int tailleLo;
+    LO=ajout_tete_s(g.tab[dep],LO);
+    double * F=calloc(g.n,sizeof(double));
+    double * G=calloc(g.n,sizeof(double));
+    double * H=calloc(g.n,sizeof(double));
+    if ((F==NULL)||(G==NULL)||(H==NULL)){
+        printf("\n\nERREUR ALLOCATION F OU G OU H");
+        exit(EXIT_FAILURE);
+    }
+
+    //Initialisation
+    int i;
+    for (i=0;i<g.n;i++) {
+        F[i]=2000000000;
+        G[i]=2000000000;
+        H[i]=0;
+    }
+    F[dep]=0;
+    G[dep]=0;
+
+    //Tant que le sommet d'arrivée n'est pas dans LF
+    while (!in_liste_s(g.tab[arr],LF)) {
+        tailleLo=taille_s(LO);
+        lo=calloc(tailleLo,sizeof(int));
+        if (lo==NULL) {
+            printf("\nImpossible de creer lo");
+            exit(EXIT_FAILURE);
+        }
+        temp=LO;
+        for (i=0;i<tailleLo;i++) {
+            lo[i]=(temp->val).num;
+            temp=temp->suiv;
+        }
+        triTas(lo,F,tailleLo);
+        best=g.tab[lo[0]];              //On trouve le sommet ayant le plus court chemin de LO
+        if (compare_sommet(best,g.tab[arr])) {break;}
+        LO=supprimen_s(indice_s(best,LO),LO); //On l'enlève de LO
+        LF=ajout_tete_s(best,LF);        //On l'ajoute à LF
+        temp_a=best.voisins;
+
+        while (!liste_vide(temp_a)) {
+              s=(temp_a->val).arrivee;
+              if (!(in_liste_s(g.tab[s],LF))) {
+                   if (!(in_liste_s(g.tab[s],LO))) {
+                        listePere[s]=best.num;
+                        G[s]=G[best.num]+(temp_a->val).cout;
+                        //H[s]= ...
+                        F[s]=G[s]+H[s];
+                        LO=ajout_tete_s(g.tab[s],LO);
+                   }
+                   else {
+                        if ((G[best.num]+(temp_a->val).cout)<G[s]) {
+                            listePere[s]=best.num;
+                            G[s]=G[best.num]+(temp_a->val).cout;
+                            //H[s]= ...
+                            F[s]=G[s]+H[s];
+                        }
+                   }
+              }
+              temp_a=temp_a->suiv;
+        }
+    }
+    return G[arr];
 }

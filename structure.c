@@ -140,6 +140,42 @@ int in_liste(T_ARC a,L_ARC l) {
     return in_liste(a,l->suiv);
 }
 
+//renvoie 1 si a est dans l, 0 sinon
+int in_liste_s(T_SOMMET a,L_SOMMET l) {
+    if (liste_vide_s(l)) {
+        return 0;
+    }
+    if (compare_sommet(a,l->val)) {
+        return 1;
+    }
+    return in_liste_s(a,l->suiv);
+}
+
+//Renvoie la taille de la liste
+int taille_s(L_SOMMET l) {
+    int i=0;
+    L_SOMMET s=l;
+    while (!liste_vide_s(s)) {
+        s=s->suiv;
+        i++;
+    }
+    return i;
+}
+
+//Renvoie l'indice de l'élèment a s'il est présent dans l -1 sinon
+int indice_s(T_SOMMET a,L_SOMMET l) {
+    if (in_liste_s(a,l)) {
+        int i=0;
+        L_SOMMET s=l;
+        while (!(compare_sommet(a,s->val))) {
+            s=s->suiv;
+            i++;
+        }
+        return i;
+    }
+    return -1;
+}
+
 //renvoie la liste commencant par a si celui-ci est présent, null sinon
 L_ARC recherche_liste(T_ARC a,L_ARC l) {
     if (liste_vide(l)) {
@@ -150,10 +186,28 @@ L_ARC recherche_liste(T_ARC a,L_ARC l) {
     }
     return recherche_liste(a,l->suiv);
 }
+//renvoie 1 si a et b sont identiques 0 sinon
+int compare_liste(L_ARC a,L_ARC b) {
+    if (liste_vide(a)&&liste_vide(b)) {
+        return 1;
+    }
+    if ((liste_vide(a))||(liste_vide(b))) {
+        return 0;
+    }
+    if (!compare_arc(a->val,b->val)) {
+        return 0;
+    }
+    return compare_liste(a->suiv,b->suiv);
+}
 
 //renvoie 1 si a et b sont identiques 0 sinon
 int compare_arc(T_ARC a,T_ARC b) {
     return ((a.arrivee==b.arrivee)&&(a.cout==b.cout));
+}
+
+//renvoie 1 si a et b sont identiques 0 sinon
+int compare_sommet(T_SOMMET a,T_SOMMET b) {
+    return ((!strcmp(a.nom,b.nom))&&(a.x==b.x)&&(a.x==b.x)&&(a.num==b.num)&&(compare_liste(a.voisins,b.voisins)));
 }
 
 //Affiche un tas de taille n

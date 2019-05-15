@@ -3,7 +3,7 @@
 
 typedef struct { int arrivee; double cout; } T_ARC ;
 typedef struct lsucc { T_ARC val; struct lsucc* suiv ; }* L_ARC;
-typedef struct { char* nom; double x,y ; L_ARC voisins;} T_SOMMET ;
+typedef struct { char* nom; double x,y ;int num; L_ARC voisins;} T_SOMMET ;
 typedef struct _lsucc { T_SOMMET val; struct _lsucc* suiv ; }* L_SOMMET;
 typedef struct {int n;T_SOMMET* tab;} GRAPHE;
 
@@ -29,10 +29,17 @@ L_SOMMET supprimen_s(int n,L_SOMMET l);
 L_ARC liberer_liste(L_ARC l);
 L_SOMMET liberer_liste_s(L_SOMMET l);
 int in_liste(T_ARC a,L_ARC l);
+int in_liste_s(T_SOMMET a,L_SOMMET l);
 L_ARC recherche_liste(T_ARC a,L_ARC l);
+int indice_s(T_SOMMET a,L_SOMMET l);
+int compare_liste(L_ARC a,L_ARC b);
+int taille_s(L_SOMMET l);
 
 //Fonctions sur les arcs
 int compare_arc(T_ARC a,T_ARC b);
+
+//Fonctions sur les Sommets
+int compare_sommet(T_SOMMET a,T_SOMMET b);
 
 //Fonctions sur les Tas
 void afficheTas(int* tas, int n);
