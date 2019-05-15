@@ -23,7 +23,7 @@ L_SOMMET creer_liste_s();
 L_ARC supprimer_tete(L_ARC l);
 L_SOMMET supprimer_tete_s(L_SOMMET l);
 int liste_vide(L_ARC l);
-int liste_vide(L_SOMMET l);
+int liste_vide_s(L_SOMMET l);
 L_ARC supprimen(int n,L_ARC l);
 L_SOMMET supprimen_s(int n,L_SOMMET l);
 L_ARC liberer_liste(L_ARC l);
@@ -38,9 +38,11 @@ int compare_arc(T_ARC a,T_ARC b);
 void afficheTas(int* tas, int n);
 void echangeTas(int* tas,int i,int j);
 void augmenteTas(int* tas,double* listeCout, int i);
-void constructionTas(int* tas, int n);
+void constructionTas(int* tas,double* listeCout,int n);
 void descendreTas(int* tas,double* listeCout, int i);
-void suppresionTas(int* tas,int i);
-void triTas(int* tas,int n);
+void suppresionTas(int* tas,double* listeCout,int i);
+void triTas(int* tas,double* listeCout,int n);
+
+void afficheTabDouble(double* tas,int n);
 
 #endif

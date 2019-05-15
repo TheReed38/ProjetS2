@@ -69,7 +69,7 @@ L_SOMMET supprimer_tete_s(L_SOMMET l) {
 }
 
 int liste_vide(L_ARC l) {return (l==NULL);}
-int liste_vide(L_SOMMET l) {return (l==NULL);}
+int liste_vide_s(L_SOMMET l) {return (l==NULL);}
 
 //Supprimer le nième élément de la liste (on compte à partir de 0)
 L_ARC supprimen(int n,L_ARC l) {
@@ -189,10 +189,10 @@ void augmenteTas(int* tas,double* listeCout, int i) {
 }
 
 //Construit un tas à partir d'un tableau de n éléments
-void constructionTas(double* tas, int n) {
+void constructionTas(int* tas,double* listeCout, int n) {
     int i;
     for (i=0;i<n;i++) {
-        augmenteTas(tas,i);
+        augmenteTas(tas,listeCout,i);
     }
 }
 
@@ -220,16 +220,31 @@ void descendreTas(int* tas,double* listeCout, int i) {
 }
 
 //Permet de supprimer la racine d'un tas de taille i-1
-void supprimerTas(double* tas, int i) {
+void supprimerTas(int* tas,double* listeCout, int i) {
     echangeTas(tas,i-1,0);
-    descendreTas(tas,i-1);
+    descendreTas(tas,listeCout,i-1);
 }
 
 //Trie le tableau de taille n par le tri Tas
-void triTas(double* tas, int n) {
+void triTas(int* tas,double* listeCout, int n) {
     int i;
-    constructionTas(tas,n);
+    constructionTas(tas,listeCout,n);
     for (i=n;i>1;i--) {
-        supprimerTas(tas,i);
+        supprimerTas(tas,listeCout,i);
+    }
+}
+
+//Affiche un tableau de double
+void afficheTabDouble(double* tas,int n) {
+    int i;
+    if (n!=0) {
+        printf("[%lf",tas[0]);
+        for (i=1;i<n;i++) {
+            printf(",%lf",tas[i]);
+        }
+        printf("]");
+    }
+    else {
+        printf("[]");
     }
 }
