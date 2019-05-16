@@ -21,6 +21,16 @@ void affiche_liste(L_ARC l) {
     }
 }
 
+T_SOMMET depiler(L_SOMMET *l) {
+    if (liste_vide_s(*l)) {
+          printf("\n\nImpossible de dépiler une liste vide !\n");
+          exit(EXIT_FAILURE);
+    }
+    T_SOMMET s=(*l)->val;
+    *l=supprimer_tete_s(*l);
+    return s;
+}
+
 void affiche_liste_sommet(L_SOMMET l) {
     L_SOMMET p=NULL;
     for (p=l; !liste_vide_s(p); p=p->suiv) {

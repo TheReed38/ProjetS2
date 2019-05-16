@@ -34,6 +34,7 @@ L_ARC recherche_liste(T_ARC a,L_ARC l);
 int indice_s(T_SOMMET a,L_SOMMET l);
 int compare_liste(L_ARC a,L_ARC b);
 int taille_s(L_SOMMET l);
+T_SOMMET depiler(L_SOMMET *l);
 
 //Fonctions sur les arcs
 int compare_arc(T_ARC a,T_ARC b);

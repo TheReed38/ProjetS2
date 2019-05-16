@@ -108,6 +108,9 @@ double astar(GRAPHE g,int dep, int arr,int * listePere) {
 
     //Tant que le sommet d'arrivée n'est pas dans LF
     while (!in_liste_s(g.tab[arr],LF)) {
+        if (liste_vide_s(LO)) {
+            return 2000000000;
+        }
         tailleLo=taille_s(LO);
         lo=calloc(tailleLo,sizeof(int));
         if (lo==NULL) {
@@ -145,6 +148,18 @@ double astar(GRAPHE g,int dep, int arr,int * listePere) {
               }
               temp_a=temp_a->suiv;
         }
+        free(lo);
     }
     return G[arr];
+}
+
+L_SOMMET plusCourtChemin(int arr,int dep,int * listePere,GRAPHE g) {
+    L_SOMMET l=creer_liste_s();
+    T_SOMMET s=g.tab[arr];
+    T_SOMMET depart=g.tab[dep];
+    while (!(compare_sommet(s,depart))) {
+        l=ajout_tete_s(s,l);
+        s=g.tab[listePere[s.num]];
+    }
+    return l;
 }
