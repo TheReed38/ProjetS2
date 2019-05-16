@@ -90,9 +90,8 @@ double astar(GRAPHE g,int dep, int arr,int * listePere) {
     LO=ajout_tete_s(g.tab[dep],LO);
     double * F=calloc(g.n,sizeof(double));
     double * G=calloc(g.n,sizeof(double));
-    double * H=calloc(g.n,sizeof(double));
-    if ((F==NULL)||(G==NULL)||(H==NULL)){
-        printf("\n\nERREUR ALLOCATION F OU G OU H");
+    if ((F==NULL)||(G==NULL)){
+        printf("\n\nERREUR ALLOCATION F OU G");
         exit(EXIT_FAILURE);
     }
 
@@ -101,7 +100,6 @@ double astar(GRAPHE g,int dep, int arr,int * listePere) {
     for (i=0;i<g.n;i++) {
         F[i]=2000000000;
         G[i]=2000000000;
-        H[i]=0;
     }
     F[dep]=0;
     G[dep]=0;
@@ -132,8 +130,7 @@ double astar(GRAPHE g,int dep, int arr,int * listePere) {
                    if (!(in_liste_s(g.tab[s],LO))) {
                         listePere[s]=best.num;
                         G[s]=G[best.num]+(temp_a->val).cout;
-                        //H[s]= ...
-                        F[s]=G[s]+H[s];
+                        F[s]=G[s]+heuristic(best,g.tab[arr]);
                         LO=ajout_tete_s(g.tab[s],LO);
                    }
                    else {
