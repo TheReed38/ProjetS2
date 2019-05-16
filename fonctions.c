@@ -137,8 +137,7 @@ double astar(GRAPHE g,int dep, int arr,int * listePere) {
                         if ((G[best.num]+(temp_a->val).cout)<G[s]) {
                             listePere[s]=best.num;
                             G[s]=G[best.num]+(temp_a->val).cout;
-                            //H[s]= ...
-                            F[s]=G[s]+H[s];
+                            F[s]=G[s]+heuristic(best,g.tab[arr]);
                         }
                    }
               }
