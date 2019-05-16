@@ -60,6 +60,7 @@ GRAPHE lecture_fichier(char* nom_fichier){
     temp.num=i;
     temp.voisins = creer_liste();
     g.tab[i] = temp; /*on ajoute le noeud au graphe*/
+    printf("sommets : %d \% \n", (int)(100*i/nbsommet));
     i++;
   }
 
@@ -70,6 +71,7 @@ GRAPHE lecture_fichier(char* nom_fichier){
     arc.arrivee = arrive;
     arc.cout = prix;
     g.tab[depart].voisins = ajout_tete(arc, g.tab[depart].voisins);
+    printf("arcs : %d \% \n", (int)(100*i/nbarc));
     i++;
   }
 
