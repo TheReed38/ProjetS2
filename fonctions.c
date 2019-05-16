@@ -3,6 +3,24 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+
+static double absolu(double x){
+  if (x<0) return -x;
+  return x;
+}
+
+
+static double heuristic(T_SOMMET a, T_SOMMET b){
+  double x = absolu (a.x - b.x);
+  double y = absolu (b.y - b.y);
+  return (x+y)/5;
+}
+
+
+
+
+
 GRAPHE lecture_fichier(char* nom_fichier){
   FILE* f;
   GRAPHE g;
