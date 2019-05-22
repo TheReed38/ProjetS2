@@ -32,6 +32,7 @@ GRAPHE lecture_fichier(char* nom_fichier){
   char mot[512] ;
   char com[512];
   int i = 0;
+  int j = 0;
   f=fopen(nom_fichier,"r");
   if (f==NULL) { printf("Impossible d’ouvrir le fichier\n"); exit(EXIT_FAILURE);}
   /* Lecture de la premiere ligne du fichier : nombre de sommet et nombre d’arcs */
@@ -60,19 +61,22 @@ GRAPHE lecture_fichier(char* nom_fichier){
     temp.num=i;
     temp.voisins = creer_liste();
     g.tab[i] = temp; /*on ajoute le noeud au graphe*/
-    printf("sommets : %d \% \n", (int)(100*i/nbsommet));
     i++;
+    if ((int)(100*i/nbsommet) != (int)(100*j/nbsommet)) printf("sommets : %d \% \n", (int)(100*i/nbsommet));
+    j=i;
   }
 
   fgets(com,511,f); /*ligne de commentaire*/
   i = 0;
+  j = 0;
   while (i<nbarc){ /*on lit les arc */
     fscanf(f,"%d %d %lf", &(depart), &(arrive), &(prix));
     arc.arrivee = arrive;
     arc.cout = prix;
     g.tab[depart].voisins = ajout_tete(arc, g.tab[depart].voisins);
-    printf("arcs : %d \% \n", (int)(100*i/nbarc));
     i++;
+    if ((int)(100*i/nbarc) != (int)(100*j/nbarc)) printf("arcs : %d \% \n", (int)(100*i/nbarc));
+    j=i;
   }
 
   /* Ne pas oublier de fermer votre ficheir */
