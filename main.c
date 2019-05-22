@@ -30,7 +30,7 @@ int main(){
             }
             else {
                 listePere=calloc(graphe.n,sizeof(int));
-                if (listePere=NULL) {
+                if (listePere==NULL) {
                     printf("\nImpossible d'allouer la liste des pères");
                     exit(EXIT_FAILURE);
                 }
