@@ -21,24 +21,38 @@ int main(){
     while (encore) {
         printf("\nRenseignez le noeud de départ et le noeud d'arrivée\n");
         scanf("%d %d",&dep,&arr);
-        listePere=calloc(graphe.n,sizeof(int));
-        for (i=0;i<graphe.n;i++) {
-            listePere[i]=dep;
-        }
-        printf("\nLancement de astar !\n");
-        ppc=astar(graphe,dep,arr,listePere);
-        if (ppc>=2000000000) {
-            printf("\n\nIl n'y a pas de chemin entre %s et %s !\nNous nous excusons pour le désagrément causé !",(graphe.tab[dep]).nom,(graphe.tab[arr]).nom);
+        if ((dep<0)||(dep>graphe.n)) {
+            printf("\nLe noeud dont vous partez n'est pas dans le graphe\n");
         }
         else {
-            printf("\nLe plus court chemin a un coût de %lf\n",ppc);
-            chemin=plusCourtChemin(arr,dep,listePere,graphe);
-            printf("\n%s\n",(graphe.tab[dep]).nom);
-            while (!(liste_vide_s(chemin))) {
-                s=depiler(&chemin);
-                printf("  |\n");
-                printf("  v\n");
-                printf("%s\n",s.nom);
+            if ((arr<0)||(arr>graphe.n)) {
+                printf("\nLe noeud que vous cherchez à atteindre n'est pas dans le graphe\n");
+            }
+            else {
+                listePere=calloc(graphe.n,sizeof(int));
+                if (listePere=NULL) {
+                    printf("\nImpossible d'allouer la liste des pères");
+                    exit(EXIT_FAILURE);
+                }
+                for (i=0;i<graphe.n;i++) {
+                    listePere[i]=dep;
+                }
+                printf("\nLancement de astar !\n");
+                ppc=astar(graphe,dep,arr,listePere);
+                if (ppc>=2000000000) {
+                    printf("\n\nIl n'y a pas de chemin entre %s et %s !\nNous nous excusons pour le désagrément causé !",(graphe.tab[dep]).nom,(graphe.tab[arr]).nom);
+                }
+                else {
+                    printf("\nLe plus court chemin a un coût de %lf\n",ppc);
+                    chemin=plusCourtChemin(arr,dep,listePere,graphe);
+                    printf("\n%s\n",(graphe.tab[dep]).nom);
+                    while (!(liste_vide_s(chemin))) {
+                        s=depiler(&chemin);
+                        printf("  |\n");
+                        printf("  v\n");
+                        printf("%s\n",s.nom);
+                    }
+                }
             }
         }
         printf("\nVoulez vous rechercher un nouveau chemin dans ce graphe ?\n1.Oui 2.Non\n");
