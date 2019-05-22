@@ -39,6 +39,7 @@ GRAPHE lecture_fichier(char* nom_fichier){
   fscanf(f,"%d %d ",&nbsommet,&nbarc);
   printf("Il y a %d sommets et %d arcs",nbsommet,nbarc);
   g.tab = calloc(nbsommet, sizeof(temp)); /*Allocation mémoire pour le graphe */
+  if (g.tab==NULL){printf("\nErreur allocation\n");}
   g.n = nbsommet;
   /* Ligne de texte "Sommets du graphe" qui ne sert a rien */
   fgets(mot,511,f);
@@ -85,6 +86,71 @@ GRAPHE lecture_fichier(char* nom_fichier){
 }
 
 double astar(GRAPHE g,int dep, int arr,int * listePere) {
+    int best;
+    L_SOMMET temp;
+    L_ARC temp_a;
+    int s;
+    int* LF=calloc(g.n,sizeof(int));
+    int* LO=calloc(g.n,sizeof(int));
+    int tailleLo=0;
+    int tailleLf=0;
+    LO[tailleLo]=dep;
+    tailleLo++;
+    double * F=calloc(g.n,sizeof(double));
+    double * G=calloc(g.n,sizeof(double));
+    if ((F==NULL)||(G==NULL)){
+        printf("\n\nERREUR ALLOCATION F OU G");
+        exit(EXIT_FAILURE);
+    }
+    //Initialisation
+    int i;
+    for (i=0;i<g.n;i++) {
+        F[i]=2000000000;
+        G[i]=2000000000;
+    }
+    F[dep]=0;
+    G[dep]=0;
+
+    //Tant que le sommet d'arrivée n'est pas dans LF
+    while (!in_tab_i(arr,LF,tailleLf)) {
+        if (tailleLo==0) {
+            return 2000000000;
+        }
+        triTas(LO,F,tailleLo);
+        best=LO[0];              //On trouve le sommet ayant le plus court chemin de LO
+        if (best==arr) {break;}
+        supprimerTas(LO,F,tailleLo); //On l'enlève de LO
+        tailleLo--;
+        LF[tailleLf]=best;        //On l'ajoute à LF
+        tailleLf++;
+        temp_a=(g.tab[best]).voisins;
+
+        while (!liste_vide(temp_a)) {
+              s=(temp_a->val).arrivee;
+              if (!(in_tab_i(s,LF,tailleLf))) {
+                   if (!(in_tab_i(s,LO,tailleLo))) {
+                        listePere[s]=best;
+                        G[s]=G[best]+(temp_a->val).cout;
+                        F[s]=G[s]+heuristic(g.tab[best],g.tab[arr]);
+                        LO[tailleLo]=s;
+                        tailleLo++;
+                   }
+                   else {
+                        if ((G[best]+(temp_a->val).cout)<G[s]) {
+                            listePere[s]=best;
+                            G[s]=G[best]+(temp_a->val).cout;
+                            F[s]=G[s]+heuristic(g.tab[best],g.tab[arr]);
+                        }
+                   }
+              }
+              temp_a=temp_a->suiv;
+        }
+    }
+    return G[arr];
+}
+
+
+double astar_mauvais(GRAPHE g,int dep, int arr,int * listePere) {
     T_SOMMET best;
     L_SOMMET temp;
     L_ARC temp_a;
@@ -109,7 +175,6 @@ double astar(GRAPHE g,int dep, int arr,int * listePere) {
     }
     F[dep]=0;
     G[dep]=0;
-
     //Tant que le sommet d'arrivée n'est pas dans LF
     while (!in_liste_s(g.tab[arr],LF)) {
         if (liste_vide_s(LO)) {
@@ -139,6 +204,8 @@ double astar(GRAPHE g,int dep, int arr,int * listePere) {
                    if (!(in_liste_s(g.tab[s],LO))) {
                         listePere[s]=best.num;
                         G[s]=G[best.num]+(temp_a->val).cout;
+                //Tant que le sommet d'arrivée n'est pas dans LF
+
                         F[s]=G[s]+heuristic(best,g.tab[arr]);
                         LO=ajout_tete_s(g.tab[s],LO);
                    }

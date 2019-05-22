@@ -15,6 +15,9 @@ void affiche_liste(L_ARC l);
 void affiche_arc(T_ARC a);
 void affiche_liste_sommet(L_SOMMET l);
 
+//Fonctions sur les tableau d'entiers
+int in_tab_i(int a,int * l,int t);
+
 //Fonctions sur les listes
 L_ARC ajout_tete(T_ARC t,L_ARC l);
 L_SOMMET ajout_tete_s(T_SOMMET t,L_SOMMET l);

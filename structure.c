@@ -46,12 +46,14 @@ void affiche_arc(T_ARC a) {
 L_ARC ajout_tete(T_ARC t,L_ARC l) {
     L_ARC p=creer_liste();
     if (!(liste_vide(p=calloc( 1, sizeof (*p)))))  { p->val=t; p->suiv=l; }
+    else {printf("\nErreur allocation\n");}
     return p;
 }
 
 L_SOMMET ajout_tete_s(T_SOMMET t,L_SOMMET l) {
     L_SOMMET p=creer_liste_s();
     if (!(liste_vide_s(p=calloc( 1, sizeof (*p)))))  { p->val=t; p->suiv=l; }
+    else {printf("\nErreur allocation\n");}
     return p;
 }
 
@@ -217,7 +219,8 @@ int compare_arc(T_ARC a,T_ARC b) {
 
 //renvoie 1 si a et b sont identiques 0 sinon
 int compare_sommet(T_SOMMET a,T_SOMMET b) {
-    return ((!strcmp(a.nom,b.nom))&&(a.x==b.x)&&(a.x==b.x)&&(a.num==b.num)&&(compare_liste(a.voisins,b.voisins)));
+    //return ((!strcmp(a.nom,b.nom))&&(a.x==b.x)&&(a.y==b.y)&&(a.num==b.num)&&(compare_liste(a.voisins,b.voisins)));
+    return (a.num==b.num);
 }
 
 //Affiche un tas de taille n
@@ -311,4 +314,14 @@ void afficheTabDouble(double* tas,int n) {
     else {
         printf("[]");
     }
+}
+
+//renvoie 1 si a est dans l, 0 sinon
+int in_tab_i(int a,int * l,int t) {
+    int i=0;
+    while ((i<t)&&(l[i]!=a)) {
+        i++;
+    }
+    if (i==t) return 0;
+    return 1;
 }
