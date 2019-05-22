@@ -7,7 +7,7 @@ CFLAGS=-c -g
 
 LDFLAGS=
 
-ppc: main.o structure.o fonctions.o
+pcc: main.o structure.o fonctions.o
 	gcc -o $@ $^ $(LDFLAGS)
 
 
@@ -15,7 +15,7 @@ ppc: main.o structure.o fonctions.o
 	gcc $< $(CFLAGS)
 
 clean :
-	rm *.o ppc
+	rm *.o pcc
 
 
 
