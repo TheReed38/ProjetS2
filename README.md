@@ -1,4 +1,4 @@
-# Programme A*
+<center>Programme A* </center>
 
 Un programme permettant de calculer le plus court chemin entre 2 sommets a sein d'un fichier.
 
