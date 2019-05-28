@@ -43,7 +43,7 @@ int main(){
                     printf("\n\nIl n'y a pas de chemin entre %s et %s !\nNous nous excusons pour le désagrément causé !",(graphe.tab[dep]).nom,(graphe.tab[arr]).nom);
                 }
                 else {
-                    printf("\nLe plus court chemin a un coût de %lf\n",ppc);
+                    
                     chemin=plusCourtChemin(arr,dep,listePere,graphe);
                     printf("\n%s\n",(graphe.tab[dep]).nom);
                     while (!(liste_vide_s(chemin))) {
@@ -52,6 +52,7 @@ int main(){
                         printf("  v\n");
                         printf("%s\n",s.nom);
                     }
+                    printf("\nLe plus court chemin a un coût de %lf\n",ppc);
                 }
             }
         }
