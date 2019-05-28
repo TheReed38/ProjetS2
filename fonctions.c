@@ -37,7 +37,7 @@ GRAPHE lecture_fichier(char* nom_fichier){
   if (f==NULL) { printf("Impossible d’ouvrir le fichier\n"); exit(EXIT_FAILURE);}
   /* Lecture de la premiere ligne du fichier : nombre de sommet et nombre d’arcs */
   fscanf(f,"%d %d ",&nbsommet,&nbarc);
-  printf("Il y a %d sommets et %d arcs",nbsommet,nbarc);
+  printf("Il y a %d sommets et %d arcs \n",nbsommet,nbarc);
   g.tab = calloc(nbsommet, sizeof(temp)); /*Allocation mémoire pour le graphe */
   if (g.tab==NULL){printf("\nErreur allocation\n");}
   g.n = nbsommet;
